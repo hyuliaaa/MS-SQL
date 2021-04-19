@@ -1,0 +1,101 @@
+
+use movies;
+SELECT *
+FROM MOVIE;
+
+
+SELECT TITLE
+FROM MOVIE;
+
+
+SELECT *
+FROM MOVIE
+WHERE STUDIONAME='Paramount'
+
+SELECT * 
+FROM MOVIE
+WHERE TITLE like 'Star %';
+
+SELECT TITLE
+FROM MOVIE
+ORDER BY TITLE DESC;
+
+--zadachi za movies
+SELECT ADDRESS
+FROM STUDIO
+WHERE NAME='MGM'
+
+SELECT BIRTHDATE
+FROM MOVIESTAR
+WHERE NAME='Sandra Bullock'
+
+SELECT STARNAME
+FROM STARSIN
+WHERE MOVIEYEAR=1980 and MOVIETITLE like '%Empire%';
+
+SELECT *
+FROM MOVIEEXEC
+wHERE NETWORTH> 10000000
+
+
+SELECT *
+FROM MOVIESTAR
+WHERE GENDER= 'M' OR ADDRESS like '%Malibu%'
+
+
+--zadachi pc
+use pc;
+
+SELECT model,speed as MHz,hd as GB
+FROM pc
+WHERE PRICE < 1200
+
+SELECT model, price/1.1	as EUR
+FROM laptop
+ORDER BY price;
+
+SELECT model,hd,screen
+FROM laptop
+WHERE price > 1000
+
+SELECT *
+FROM printer
+WHERE color='y'
+
+SELECT model,speed,hd
+FROM PC
+WHERE price <2000 AND (cd='12x' or cd='16x');
+
+SELECT code,model,speed+ram+10*screen as rating
+FROM laptop
+ORDER BY rating, code;
+
+--zadachi ships
+use ships;
+SELECT CLASS,COUNTRY
+FROM CLASSES
+WHERE NUMGUNS<10
+
+SELECT NAME	as shipname	
+FROM SHIPS
+WHERE LAUNCHED <1918
+
+SELECT SHIP,BATTLE
+FROM OUTCOMES
+WHERE RESULT='sunk'
+
+
+SELECT NAME
+FROM SHIPS
+WHERE NAME=CLASS
+
+SELECT NAME
+FROM SHIPS
+WHERE NAME like 'R%'
+
+
+
+select name
+from ships
+where name like '% %'
+	and name not like '% % %';
