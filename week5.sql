@@ -259,5 +259,31 @@ select country,AVG(DISPLACEMENT)
 from CLASSES
 group by COUNTRY
 
+use movies
 
+--За всеки актьор/актриса изведете броя на 
+-- различните студиа, с които са записвали филми.
+
+select STARNAME, count(distinct STUDIONAME)
+from  starsin
+join MOVIE on MOVIETITLE=TITLE and MOVIEYEAR=YEAR
+group by STARNAME
+
+--За всеки актьор/актриса изведете броя на различните студиа, с които са записвали филми.
+--Включете и тези, за които няма информация в кои филми са играли.
+
+
+select name, count(distinct STUDIONAME)
+from MOVIESTAR
+left join STARSIN on name=STARNAME
+left join movie on MOVIETITLE=TITLE and MOVIEYEAR=YEAR
+group by name
+
+
+
+select name, count(distinct studioname)
+from movie
+join starsin on movietitle=title and movieyear=year
+right join moviestar on name=starname 
+group by name;
 
