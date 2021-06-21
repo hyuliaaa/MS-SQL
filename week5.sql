@@ -198,6 +198,66 @@ from laptop
 group by screen
 
 
+--Напишете заявка, която извежда броя на класовете кораби.
+
+use ships
+
+select * from CLASSES
+select count(*)
+from CLASSES
+
+--Напишете заявка, която извежда средния брой на оръдията (numguns) за всички
+--кораби, пуснати на вода (т.е. изброени са в  таблицата Ships).
+
+select avg(NUMGUNS)
+from CLASSES
+join ships on CLASSES.CLASS=ships.CLASS
+
+
+--Напишете заявка, която извежда за всеки клас първата и последната година, в която
+--кораб от съответния клас е пуснат на вода.
+
+select * from ships
+
+select class, min(launched) as F, max(launched) as L
+from ships
+group by CLASS
+
+--Напишете заявка, която за всеки клас
+--извежда броя на корабите, потънали в битка
+
+select * from ships
+select * from OUTCOMES
+
+
+select class, count(result)
+from ships
+join OUTCOMES on name=ship
+where result='sunk'
+group by CLASS
+
+--(не се включват класове без потънали кораби)
+
+--Напишете заявка, която за всеки клас с над 4 пуснати на вода кораба извежда
+--броя на корабите, потънали в битка.
+
+select *from SHIPS
+
+select class, count (name)
+from ships s 
+join outcomes o on s.name=o.ship
+where result='sunk' and class in 
+		(select class
+		from ships
+		group by class
+		having count(*)>4)
+
+--Напишете заявка, която извежда средното
+--тегло на корабите (displacement) за всяка страна. 
+
+select country,AVG(DISPLACEMENT)
+from CLASSES
+group by COUNTRY
 
 
 
