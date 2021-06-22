@@ -121,4 +121,41 @@ from product
 left join pc on product.model = pc.model
 where product.type = 'PC';
 
+use pc
+
+-- Напишете заявка, която извежда производител, модел и тип на продукт за тези производители,
+--за които съответният продукт не се продава (няма го в таблиците PC, Laptop или Printer).
+
+
+select maker, model, type
+from product
+where model not in (select model from pc)
+	and model not in (select model from laptop)
+	and model not in (select model from printer);
+
+
+use ships
+--Напишете заявка, която за всеки кораб извежда името му, държавата,
+--броя оръдия и годината на пускане (launched).
+select *from CLASSES
+SELECT *from ships
+
+
+select NAME,COUNTRY,NUMGUNS,LAUNCHED
+from CLASSES
+join ships on CLASSES.class=ships.CLASS
+
+
+--Напишете заявка, която извежда имената на корабите, участвали в битка от 1942 г. 
+select * from BATTLES
+select * from OUTCOMES
+
+select ship
+from OUTCOMES
+join BATTLES on outcomes.BATTLE=BATTLES.NAME
+where year(date)=1942
+
+
+
+
 
