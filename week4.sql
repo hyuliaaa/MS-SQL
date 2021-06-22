@@ -108,4 +108,17 @@ where name not in (select starname from starsin);
 
 
 
+use pc
+
+--За всеки модел компютри да се изведат цените на различните конфигурации от този модел.
+--Ако няма конфигурации за даден модел, да се изведе NULL. Резултатът да има две колони: model и price.
+
+select * from pc	
+select * from product
+
+select distinct product.model, price 
+from product
+left join pc on product.model = pc.model
+where product.type = 'PC';
+
 
