@@ -127,3 +127,80 @@ SET screen=screen+1
 WHERE model IN (SELECT model
 		      FROM product
 		      WHERE maker='B');
+
+
+use ships
+
+--Два британски бойни кораба (type = 'bb') от класа Nelson - Nelson и Rodney - са били
+--пуснати на вода едновременно през 1927 г. Имали са девет 16-инчови оръдия (bore) и
+--водоизместимост от 34 000 тона (displacement). Добавете тези факти към базата от данни.
+
+select * from CLASSES
+
+select * from ships
+
+insert into classes
+values('Nelson', 'bb', 'Gt.Britain', 9, 16, 34000);
+
+insert into ships
+values('Nelson', 'Nelson', 1927);
+
+insert into ships
+values('Rodney', 'Nelson', 1927);
+
+
+
+select * from OUTCOMES
+select * from ships
+
+select *
+from SHIPS
+join OUTCOMES on NAME=SHIP
+where result='damaged'
+--Изтрийте от Ships  всички кораби, които са потънали в битка  
+
+begin transaction
+
+delete from ships
+where name in (select NAME
+from SHIPS
+join OUTCOMES on NAME=SHIP
+where result='damaged')
+
+delete from ships
+where name in (select ship from outcomes where result='sunk');
+
+rollback
+
+
+
+
+--Променете данните в релацията Classes така, че калибърът (bore) да се измерва в
+--сантиметри (в момента е в инчове, 1 инч ~2.54 см) и водоизместимостта да се измерва в метрични тонове (1 м.т. = 1.1 т.)
+
+update classes
+set bore=bore*2.54, displacement=displacement/1.1;
+
+
+
+
+
+--Изтрийте всички класове, от които има по-малко от три кораба.
+ 
+ select * from CLASSES
+ select * from ships
+
+delete from classes
+where class NOT in
+(select class
+from ships
+group by class
+having count(*) >= 3);
+
+
+
+
+
+
+
+
