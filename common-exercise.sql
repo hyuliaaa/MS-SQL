@@ -75,3 +75,87 @@ where numguns in (6, 8, 10);
 
 --Държавите, които имат класове с различен калибър (напр. САЩ имат клас с 14
 --калибър и класове с 16 калибър, докато Великобритания има само класове с 15).
+
+use ships
+
+select * 
+from classes	
+
+
+select distinct c1.COUNTRY
+from CLASSES c1
+join CLASSES c2 on  c1.COUNTRY=c2.COUNTRY
+where c1.bore!=c2.bore
+
+--Страните, които произвеждат кораби с най-голям брой оръдия (numguns).
+
+select * from CLASSES
+
+select distinct COUNTRY
+from CLASSES
+where NUMGUNS >= all(select NUMGUNS from CLASSES)
+
+use movies
+--Всички филми, чието заглавие съдържа едновременно думите 'Star' и 'Trek' (не
+--непременно в този ред). Резултатите да се подредят по година (първо най-новите
+--филми), а филмите от една и съща година - по азбучен ред.
+
+
+select * from movie
+
+select *
+from movie
+where title like '%Star%' and title like '%Trek%'
+order by year DESC,title
+
+--Заглавията и годините на филмите, в които са играли звезди, родени между
+--1.1.1970 и 1.7.1980.
+
+
+
+select * from MOVIESTAR
+select * from STARSIN
+
+
+select *
+from MOVIESTAR
+join starsin on name=STARNAME
+where BIRTHDATE >= '1970-01-01'  and BIRTHDATE <='1980-07-01'
+
+use pc
+
+--Компютрите, които са по-евтини от всеки лаптоп на същия производител.
+
+select * from product
+select * from pc
+
+
+
+select * 
+from pc
+join product p1 on pc.model=p1.model
+where price < all(select price
+				from laptop
+				join product p2 on p2.model=laptop.model
+				where p1.maker=p2.maker)
+
+				
+
+--Компютрите, които са по-евтини от всеки лаптоп и принтер на същия
+--производител.
+
+select *
+from pc 
+join product p1 on p1.model=pc.model
+where price < all(select price
+				from laptop
+				join product p2 on p2.model=laptop.model
+				where p1.maker=p2.maker)
+				and
+				price <all(select  price
+						from printer 
+						join product p3 on p3.model=printer.model
+						where p1.maker=p3.maker)
+
+
+
