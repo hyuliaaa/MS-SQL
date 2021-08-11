@@ -287,3 +287,35 @@ join starsin on movietitle=title and movieyear=year
 right join moviestar on name=starname 
 group by name;
 
+
+
+
+--Изведете имената на актьорите, участвали в поне 3 филма след 1990 г
+
+
+
+
+select * from STARSIN
+
+
+
+select STARNAME
+from starsin
+where MOVIEYEAR>1990
+group by STARNAME
+having COUNT(MOVIETITLE)>=3
+
+use pc
+
+--Да се изведат различните модели компютри, подредени по цена на най-скъпия конкретен
+--компютър от даден модел.
+
+
+
+select model,  max(price)
+from pc
+group by model
+
+
+
+
