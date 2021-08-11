@@ -181,3 +181,57 @@ group by c.country
 
 
 
+use ships
+
+--Изведете броя на потъналите американски кораби за всяка проведена битка с поне един
+--потънал американски кораб.
+
+select BATTLE, count(result)
+from OUTCOMES	
+left join SHIPS on ships.NAME=OUTCOMES.SHIP
+left join CLASSES on ships.CLASS=CLASSES.CLASS
+where RESULT='sunk' and COUNTRY='USA'
+group by BATTLE
+
+--17. Битките, в които са участвали поне 3 кораба на една и съща страна.
+
+select distinct BATTLE
+from OUTCOMES	
+left join SHIPS on ships.NAME=OUTCOMES.SHIP
+left join CLASSES on ships.CLASS=CLASSES.CLASS
+group by battle,COUNTRY
+having count(ship)>=3
+
+
+-- 18. Имената на класовете, за които няма кораб, пуснат
+-- на вода след 1921 г., но имат пуснат поне един кораб.
+SELECT class 
+FROM ships
+GROUP BY class 
+HAVING MAX(launched) <= 1921;
+
+
+--19. (*) За всеки кораб намерете броя на битките, в които е бил увреден. Ако корабът не е
+--участвал в битки или пък никога не е бил увреждан, в резултата да се вписва 0.
+
+select * from ships
+
+
+select name, count(battle)
+from ships
+left join outcomes on name = ship and result = 'damaged'
+group by name;
+
+
+--20. Намерете за всеки клас с поне 3 кораба броя на корабите от този клас, които са победили
+--в битка.
+
+
+
+select CLASS, count(distinct ship)
+from ships
+left join OUTCOMES on ships.NAME=OUTCOMES.SHIP and result='ok'
+group by CLASS
+having count(distinct name)>=3
+
+
