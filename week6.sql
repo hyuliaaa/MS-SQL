@@ -107,3 +107,77 @@ from STARSIN
 where movieyear > 1990
 group by STARNAME
 having count(movietitle)>=3
+
+
+
+
+use ships
+
+--6. За всеки кораб, който е от клас с име, несъдържащо буквите i и k, да се изведе името
+--на кораба и през коя година е пуснат на вода (launched). Резултатът да бъде сортиран
+--така, че първо да се извеждат най-скоро пуснатите кораби
+
+select name,LAUNCHED
+from ships
+where class not like '%[ik]%'
+order by LAUNCHED desc
+
+-- 7. Да се изведат имената на всички битки, в които е повреден (damaged) поне един
+--японски кораб.
+
+select * from OUTCOMES
+
+select BATTLE 
+from CLASSES 
+left join ships on CLASSES.CLASS=ships.CLASS
+left join outcomes on ships.NAME=OUTCOMES.SHIP
+where RESULT='damaged' and COUNTRY='Japan'
+
+--8. Да се изведат имената и класовете на всички кораби, пуснати на вода една година след
+--кораба 'Rodney' и броят на оръдията им е по-голям от средния брой оръдия на
+--класовете, произвеждани от тяхната страна. (task not understood)
+
+select *
+from SHIPS
+where LAUNCHED - 1 = (select LAUNCHED from ships where name='Rodney')
+
+
+--9. Да се изведат американските класове, за които всички техни кораби са пуснати на вода
+--в рамките на поне 10 години (например кораби от клас North Carolina са пускани в
+--периода от 1911 до 1941, което е повече от 10 години, докато кораби от клас Tennessee
+--са пуснати само през 1920 и 1921 г.).
+
+select CLASSES.CLASS 
+from CLASSES
+join ships on CLASSES.CLASS=ships.CLASS
+where COUNTRY='USA' 
+group by classes.CLASS
+having max(launched)-min(launched) >=10
+
+--10. За всяка битка да се изведе средният брой кораби от една и съща държава (например в
+--битката при Guadalcanal са участвали 3 американски и един японски кораб, т.е.
+--средният брой е 2).
+
+select BATTLES.name, count(ship) / count ( distinct country)
+from BATTLES
+left join OUTCOMES on BATTLES.NAME=OUTCOMES.BATTLE
+left join ships on ships.NAME=OUTCOMES.SHIP
+left join CLASSES on CLASSES.CLASS=SHIPS.CLASS
+group by battles.NAME
+
+
+
+--11. За всяка държава да се изведе: броят на корабите от тази държава; броя на битките, в
+--които е участвала; броя на битките, в които неин кораб е потънал ('sunk') (ако някоя от
+--бройките е 0 – да се извежда 0).
+
+select c.country, count(ships.name), count(o1.battle), count(o2.result) 
+from classes c 
+left join ships on ships.class = c.class
+left join outcomes o1 on name = o1.ship
+left join outcomes o2 on name = o2.ship
+and o2.result = 'sunk'
+group by c.country
+
+
+
