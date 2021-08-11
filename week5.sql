@@ -316,6 +316,120 @@ select model,  max(price)
 from pc
 group by model
 
+use movies
+
+
+select * 
+from MOVIESTAR
+
+select * from STARSIN
+
+
+select name,count(distinct studioname)
+from MOVIESTAR
+left join STARSIN on STARNAME=NAME
+left join movie on movietitle=title and MOVIEYEAR=YEAR
+group by name
+
+select name, count(distinct studioname)
+from movie
+join starsin on movietitle=title and movieyear=year
+right join moviestar on name=starname 
+group by name;
+
+
+--Изведете имената на актьорите, участвали в поне 3 филма след 1990 г
+
+
+
+
+select * from STARSIN
+
+
+
+select STARNAME
+from starsin
+where MOVIEYEAR>1990
+group by STARNAME
+having COUNT(MOVIETITLE)>=3
+
+use pc
+
+--Да се изведат различните модели компютри, подредени по цена на най-скъпия конкретен
+--компютър от даден модел.
+
+select model,  max(price)
+from pc
+group by model
+
+
+use ships
+
+--Намерете броя на потъналите американски кораби за всяка проведена битка с поне един
+--потънал американски кораб.
+
+select battle, count(*)
+from CLASSES
+left join ships on CLASSES.CLASS=ships.CLASS
+left join outcomes on outcomes.SHIP=SHIPS.NAME
+where COUNTRY='USA' and result='sunk'
+group by BATTLE
+
+
+-- Битките, в които са участвали поне 3 кораба на една и съща страна
+
+
+select country,BATTLE
+from CLASSES
+left join ships on CLASSES.CLASS=ships.CLASS
+left join outcomes on outcomes.SHIP=SHIPS.NAME
+group by country,battle
+having count(ship)>=3
+
+--Имената на класовете, за които няма кораб, пуснат на вода след 1921 г., но имат пуснат
+--поне един кораб.
+
+
+
+
+select distinct class from ships
+where class not in (select class from ships
+					where launched > 1921)
+
+--За всеки кораб броя на битките, в които е бил увреден (result = ‘damaged’). Ако корабът
+--не е участвал в битки или пък никога не е бил увреждан, в резултата да се вписва 0
+
+select name,count(result)
+from ships
+left join outcomes on ships.NAME=OUTCOMES.SHIP
+where result='damaged' or result is null 
+group by name
+
+
+
+
+select *
+from ships
+left join outcomes on ship = name and result = 'damaged' 
+group by name
+
+--Намерете за всеки клас с поне 3 кораба броя на корабите от този клас, които са
+--победили в битка (result = 'ok')
+
+
+select class, count(battle) from ships
+left join outcomes on ship = name and result = 'ok'
+group by class
+having count(name) >= 3
+
+
+--За всяка битка да се изведе името на битката, годината на битката и броят на потъналите
+--кораби, броят на повредените кораби и броят на корабите без промяна
+
+
+select * from OUTCOMES
+select * from BATTLES
+
 
 
 
