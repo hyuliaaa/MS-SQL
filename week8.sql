@@ -170,6 +170,13 @@ where result='damaged')
 delete from ships
 where name in (select ship from outcomes where result='sunk');
 
+
+delete s 
+from ships s
+join outcomes on s.NAME=OUTCOMES.SHIP
+where result='sunk'
+
+
 rollback
 
 
@@ -200,6 +207,13 @@ having count(*) >= 3);
 
 
 
+delete 
+from CLASSES
+where CLASS  in (select CLASSES.CLASS
+					from CLASSES
+					left join ships on CLASSES.CLASS=ships.CLASS
+					group by classes.CLASS
+					having count(name) <3)
 
 
 
