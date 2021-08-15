@@ -174,8 +174,33 @@ drop view mD
 
 	
 
+--Създайте изглед за всички класове с поне 9 оръдия.
+--Използвайте WITH CHECK OPTION. Опитайте се да
+--промените през изгледа броя оръдия на класа Iowa
+--последователно на 15 и на 5.
+
+
+create view NumG
+as
+select * 
+from CLASSES
+where NUMGUNS>=9
+with check option
+
+--Създайте изглед с имената на битките, в които са участвали
+--поне 3 кораба с под 9 оръдия и от тях поне един е бил
+--увреден.
+
+create view vyu
+as
+select BATTLE, COUNT(distinct SHIP) as ShipCount
+from CLASSES
+left join ships on ships.CLASS=CLASSES.CLASS
+left join OUTCOMES on OUTCOMES.SHIP=ships.NAME
+where numguns<=12 and result='damaged'
+group by BATTLE
+having count(distinct name) >=3 
 
 
 
-
-select * from CLASSES
+drop view vyu
