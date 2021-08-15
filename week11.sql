@@ -140,6 +140,22 @@ group by COUNTRY
 select avg(md)
 from tbt
 
+--. Средната стойност на displacement за най-тежките класове
+--кораби от всяка страна
+
+create view mD
+as
+select COUNTRY,max(DISPLACEMENT) as maxDis
+from CLASSES
+left join ships on classes.CLASS=ships.CLASS
+group by COUNTRY
+
+
+select avg(mD.maxDis)
+from mD
+
+
+drop view mD
 
  --Създайте изглед за всички потънали кораби по битки.
 
