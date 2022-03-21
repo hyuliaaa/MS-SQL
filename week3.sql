@@ -205,6 +205,12 @@ from product
 where model in (select model
 				from pc
 				where ram <=all(select ram from pc) and speed >=all(select speed from pc where ram <= all (select ram from pc)));
+		
+
+SELECT maker
+FROM PC
+JOIN PRODUCT ON PC.model = product.model
+WHERE RAM <= ALL(SELECT RAM FROM PC) AND SPEED >=ALL(SELECT SPEED FROM PC WHERE RAM <=ALL(SELECT RAM FROM PC))
 
 --корелативна подзаявка		
 select distinct maker
