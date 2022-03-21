@@ -251,6 +251,11 @@ where ship in (select name
 				from ships
 				where class='Kongo')
 
+SELECT DISTINCT BATTLE
+FROM SHIPS 
+JOIN OUTCOMES ON SHIPS.NAME = OUTCOMES.SHIP
+WHERE CLASS = 'kONGO'
+
 
 --Напишете заявка, която извежда имената на корабите, чиито брой
 --оръдия е най-голям в сравнение с корабите със същия калибър оръдия (bore).
