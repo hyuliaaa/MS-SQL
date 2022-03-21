@@ -269,5 +269,12 @@ where numguns >= all (select numguns
 				from classes c2
 				where c2.bore = c.bore);
 
+select name
+from ships
+where ships.CLASS in (
+					SELECT class
+					FROM CLASSES c1
+					where  c1.NUMGUNS>= all(select NUMGUNS 
+											from CLASSES c2 where c2.bore = c1.BORe))
 
 
