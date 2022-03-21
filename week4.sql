@@ -94,6 +94,15 @@ where name=(select NAME
 			where TITLE='Star Wars')
  
  
+select name, TITLE
+from MOVIE
+join MOVIEEXEC on PRODUCERC# = CERT#
+where CERT# = (select PRODUCERC#
+				from movie
+				where title = 'Star Wars')
+
+
+ 
  
 --Напишете заявка, която извежда имената на актьорите, които не са участвали в нито един филм.  
 select NAME
