@@ -189,7 +189,12 @@ select maker
 from product
 where model in (select model
 				from printer
-				where color='y' and price <= all(select price from printer where color='y'))
+				where color='y' and price <= all(select price from printer where color='y')
+
+SELECT maker
+FROM printer
+JOIN product ON printer.model = product.model
+WHERE COLOR = 'Y' AND PRICE <= ALL(SELECT PRICE FROM printer WHERE COLOR = 'Y')
 
 
 --Напишете заявка, която извежда производителите на тези персонални
