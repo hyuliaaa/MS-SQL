@@ -165,6 +165,19 @@ where price >=all(select price from pc
 								select price from laptop
 								union all	
 								select price from printer)
+								
+
+SELECT TOP 1 *
+FROM
+		(SELECT MODEL,price
+		FROM PC
+		UNION ALL
+		SELECT MODEL,price
+		FROM printer 
+		UNION ALL
+		SELECT MODEL,PRICE
+		FROM laptop) PRICE
+ORDER BY PRICE DESC
 
 
 --. Напишете заявка, която извежда производителите на цветните принтери с
