@@ -142,6 +142,21 @@ where model not in (select model from pc)
 	and model not in (select model from laptop)
 	and model not in (select model from printer);
 
+select product.model, maker,type
+from product
+left join pc on product.model = pc.model
+where type='pc' and code is null
+union
+select product.model, maker,type
+from product
+left join laptop on product.model = laptop.model
+where type='laptop' and code is null
+union
+select product.model, maker,product.type
+from product
+left join printer on product.model = printer.model
+where product.type='printer' and code is null
+
 
 use ships
 --Напишете заявка, която за всеки кораб извежда името му, държавата,
