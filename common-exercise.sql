@@ -15,6 +15,13 @@ from ships
 left join outcomes on  ships.name=outcomes.ship
 where battle is not null and (ship  like 'C%' or name like 'K%')
 
+
+
+SELECT NAME
+FROM SHIPS 
+JOIN OUTCOMES ON SHIPS.NAME = OUTCOMES.SHIP
+WHERE NAME LIKE 'C%' OR NAME LIKE 'K%' -- NAME LIKE '[CK]%'
+
 select distinct ship 
 from outcomes
 where ship like 'C%' or ship like 'K%';
