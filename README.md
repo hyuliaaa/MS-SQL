@@ -61,6 +61,20 @@ on classes.class = ships.class and launched = 1916;
 При **left join** ползваме:
 - **ON**, ако имаме условие за дясната таблица
 - **where**, ако имаме условие за лявата таблица
+```sql
+SELECT *
+FROM movie
+WHERE length = (SELECT MAX(length) FROM movie);
+```
+● Горната заявка намира най-дългите филми измежду тези, за
+които дължината е известна
+```sql
+SELECT *
+FROM movie
+WHERE length >= ALL (SELECT length FROM movie);
+```
+● Заявката не връща нищо, ако има дори един филм с
+неизвестна дължина
 
 
 
