@@ -178,4 +178,19 @@ where price < all(select price
 						where p1.maker=p3.maker)
 
 
+select *
+from pc
+join product p1 on pc.model = p1.model
+where price <all(select price
+				 from laptop
+				 join product p2 on laptop.model = p2.model
+				 where p1.maker = p2.maker
+				 UNION
+				 select price
+				 from printer	
+				 join product p3 on printer.model = p3.model
+				 where p1.maker = p3.maker)
+
+
+
 
